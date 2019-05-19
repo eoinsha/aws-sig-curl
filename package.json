@@ -1,0 +1,26 @@
+{
+  "name": "aws-sig-curl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eoin Shanaghy <eoin.shanaghy@fourtheorem.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eoinsha/aws-sig-curl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eoinsha/aws-sig-curl/issues"
+  },
+  "homepage": "https://github.com/eoinsha/aws-sig-curl#readme",
+  "dependencies": {
+    "aws-sdk": "^2.458.0",
+    "aws4": "^1.8.0",
+    "awscred": "github:eoinsha/awscred",
+    "axios": "^0.18.0"
+  }
+}
