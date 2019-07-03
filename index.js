@@ -7,17 +7,14 @@ const { URL } = require('url')
 const axios = require('axios')
 const aws4 = require('aws4')
 const awscred = require('awscred')
+const argv = require('yargs').argv
 
 const [,, ...curlOpts] = process.argv
 const url = curlOpts.pop()
 
-if (!url) {
-  throw new Error('No URL specified')
-}
-
 awscred.loadCredentialsAndRegion(credentialsLoaded)
 
-function credentialsLoaded (err, data) {
+function credentialsLoaded (err, credentialData) {
   if (err) {
     console.error({ err }, 'Failed to load credentials')
     process.exit(1)
@@ -29,14 +26,26 @@ function credentialsLoaded (err, data) {
       sessionToken
     },
     region
-  } = data
+  } = credentialData
 
-  const { host, pathname } = new URL(url)
-  const { headers } = aws4.sign({
-    path: pathname,
+  let body
+  body = argv.data
+  if (body) {
+    if (body.startsWith('@')) {
+      body = fs.readFileSync(body.substring(1))
+    }
+  }
+
+  const { host, pathname, search } = new URL(url)
+  const request = {
+    url,
+    path: pathname + search,
     host,
     region,
-  }, {
+    body
+  }
+
+  const { headers } = aws4.sign(request, {
     accessKeyId,
     secretAccessKey,
     sessionToken
@@ -50,3 +59,4 @@ function credentialsLoaded (err, data) {
 
   spawn('curl', curlOpts, { stdio: 'inherit' })
 }
+
