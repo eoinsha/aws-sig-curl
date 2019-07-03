@@ -29,15 +29,17 @@ function credentialsLoaded (err, credentialData) {
   } = credentialData
 
   let body
-  body = argv.data
+  body = argv.data || argv.d
   if (body) {
     if (body.startsWith('@')) {
       body = fs.readFileSync(body.substring(1))
     }
   }
 
+  const method = argv.request || argv.X
   const { host, pathname, search } = new URL(url)
   const request = {
+    method,
     url,
     path: pathname + search,
     host,
