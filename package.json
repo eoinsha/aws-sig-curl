@@ -22,7 +22,7 @@
     "aws-sdk": "^2.458.0",
     "aws4": "^1.8.0",
     "awscred": "github:eoinsha/awscred",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "yargs": "^13.2.4"
   }
 }
